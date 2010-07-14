@@ -1,0 +1,14 @@
+{
+	"name" : "alijaya",
+	"age" : 16,
+	"married" : false,
+	"another" :
+	{
+		"graphic" : "@$/world/graphic.png",
+		"sound" : "@sound.mp3",
+		"reference" : "@$/world/#reference.txt",
+		"dontexist" : "@$/world/!ReadMe.txt",
+		"text" : "@text.txt",
+		"escape" : "\@sound.mp3"
+	}
+}
