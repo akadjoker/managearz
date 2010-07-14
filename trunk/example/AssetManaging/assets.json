@@ -1,0 +1,13 @@
+
+{
+	"name" : "assets",
+	"files" : [ 
+	{
+		"name" : "hello",
+		"files" : [ "json.json", "sound.mp3", "text.txt" ]
+	}, 
+	{
+		"name" : "world",
+		"files" : [ "#reference.txt", "graphic.png" ]
+	} ]
+}
