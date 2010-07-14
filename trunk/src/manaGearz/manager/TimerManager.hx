@@ -19,6 +19,9 @@ class TimerManager
 		return _instance;
 	}
 	
+	public var curTime(default, null):Float;
+	public var delta(default, null):Float;
+	
 	public var delay(default, null):Int;
 	public var loops(default, null):List<Void->Void>;
 	
@@ -38,6 +41,9 @@ class TimerManager
 	private function run()
 	{
 		if(!isPlaying) return;
+		var time = Timer.stamp();
+		delta = time-curTime;
+		curTime = time;
 		for(n in loops)
 		{
 			n();
@@ -46,6 +52,7 @@ class TimerManager
 	
 	public function setDelay(delay:Int)
 	{
+		if(delay < 1) delay = 1;
 		timer.stop();
 		this.delay = delay;
 		timer = new Timer(delay);
@@ -65,10 +72,14 @@ class TimerManager
 	public function pause()
 	{
 		isPlaying = false;
+		curTime = 0;
+		delta = 0;
 	}
 	
 	public function resume()
 	{
 		isPlaying = true;
+		curTime = Timer.stamp();
+		delta = 0;
 	}
 }

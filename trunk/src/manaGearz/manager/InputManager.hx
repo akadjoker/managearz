@@ -47,10 +47,15 @@ class InputManager
 	
 	private function new()
 	{
-		lookups = new Hash<Int>();
-		keys = new Array<KeyState>();
+		mouseDown = false;
+		mousePressed = false;
+		mouseUp = true;
+		mouseReleased = false;
 		
 		wheelDelta = 0;
+		
+		lookups = new Hash<Int>();
+		keys = new Array<KeyState>();
 		
 		for(n in 0...256)
 		{
@@ -184,13 +189,21 @@ class InputManager
 	
 	function keyDownHandler(e:KeyboardEvent)
 	{
-		keys[e.keyCode] = KeyState.DOWN(true);
+		switch(keys[e.keyCode])
+		{
+			case UP(_) : keys[e.keyCode] = KeyState.DOWN(true);
+			default :
+		}
 		lastPressed = e.keyCode;
 	}
 	
 	function keyUpHandler(e:KeyboardEvent)
 	{
-		keys[e.keyCode] = KeyState.UP(true);
+		switch(keys[e.keyCode])
+		{
+			case DOWN(_) : keys[e.keyCode] = KeyState.UP(true);
+			default :
+		}
 		lastReleased = e.keyCode;
 	}
 	
@@ -263,22 +276,22 @@ class InputManager
 		}
 	}
 	
-	public function get_capsLock() : Bool
+	public inline  function get_capsLock() : Bool
 	{
 		return Keyboard.capsLock;
 	}
 	
-	public function get_numLock() : Bool
+	public inline function get_numLock() : Bool
 	{
 		return Keyboard.numLock;
 	}
 	
-	public function get_mouseX() : Float
+	public inline function get_mouseX() : Float
 	{
 		return Lib.current.mouseX;
 	}
 	
-	public function get_mouseY() : Float
+	public inline function get_mouseY() : Float
 	{
 		return Lib.current.mouseY;
 	}
