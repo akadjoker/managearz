@@ -1,0 +1,6 @@
+-main Main
+-lib hxJson2
+-cp ../../src
+-swf9 manaGearzTimer.swf
+-swf-version 10
+-swf-header 640:480:30:ffffff
