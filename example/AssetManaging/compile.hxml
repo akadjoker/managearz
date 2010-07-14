@@ -1,0 +1,18 @@
+-main Main
+-cp ../../src
+-lib hxJson2
+-swf9 manaGearzLoad.swf
+-swf-version 10
+-swf-header 640:480:30:ffffff
+
+--next
+
+-main Main
+-cp ../../src
+-lib hxJson2
+-resource assets.swf@swf
+-resource assets.json@json
+-D embed
+-swf9 manaGearzEmbed.swf
+-swf-version 10
+-swf-header 640:480:30:ffffff
