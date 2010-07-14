@@ -168,6 +168,9 @@ class EmbedManager
 		}else if(f=="\\")
 		{
 			return s.substr(1);
+		}else
+		{
+			return s;
 		}
 	}
 	
