@@ -19,6 +19,16 @@ class Main
 	static function main()
 	{
 		var a = Sys.args();
+
+		if(a.length<1)
+		{
+			print("How To Use :");
+			print("Use like this : neko Preloader.n assetsFolder");
+			print("Where the assetsFolder is your folder that contains the assets that want to be loaded");
+			print("It will produce a json with this name : assetsFolder.json");
+			return;
+		}
+		
 		var p = a[0];
 		var d = readDir(p);
 		var o = File.write(Path.withExtension(p,"json"),false);
@@ -45,5 +55,10 @@ class Main
 			}
 		}
 		return d;
+	}
+
+	static function print(s:String)
+	{
+		neko.Lib.print(s+"\n");
 	}
 }

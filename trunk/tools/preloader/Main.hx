@@ -33,6 +33,17 @@ class Main
 	static function main()
 	{
 		var a = Sys.args();
+
+		if(a.length < 2)
+		{
+			print("How To Use :");
+			print("Use like this : neko Preloader.n preloaderPath.swf swfPath.swf");
+			print("Where the preloaderPath.swf is the path of your preloader");
+			print("And where the swfPath.swf is your main swf that want to be added preloader");
+			print("It will produce a swf with this name : swfPath(Preloader).swf");
+			return;
+		}
+		
 		preloaderPath = FileSystem.fullPath(a[0]);
 		swfPath = FileSystem.fullPath(a[1]);
 		
@@ -68,6 +79,8 @@ class Main
 		//s.tags.pop();
 		
 		var i = File.read(swfPath, true);
+
+		var s2:SWF = new Reader(i).read();
 		
 		s.tags.push(TBinaryData(curIndex, i.readAll())); // add binary tag
 		
@@ -86,24 +99,33 @@ class Main
 		s.tags.push(TActionScript3(abcO.getBytes())); // make stub class
 		
 		s.tags.push(TShowFrame); // show frame
-		
+
+		s.header.width = s2.header.width;
+		s.header.height = s2.header.height;
+		s.header.fps = s2.header.fps;
 		s.header.nframes = s.header.nframes+1;
 		
 		var o = File.write(outputPath,true);
 		(new format.swf.Writer(o)).write(s);
 		o.flush();
 		o.close();
-		
-		trace("version : "+s.header.version);
-		trace("compressed : "+s.header.compressed);
-		trace("width : "+s.header.width);
-		trace("height : "+s.header.height);
-		trace("fps : "+s.header.fps);
-		trace("nframes : "+s.header.nframes);
-		trace("tags : ");
+
+		print("");
+		print("version : "+s.header.version);
+		print("compressed : "+s.header.compressed);
+		print("width : "+s.header.width);
+		print("height : "+s.header.height);
+		print("fps : "+s.header.fps);
+		print("nframes : "+s.header.nframes);
+		print("tags : ");
 		for(n in s.tags)
 		{
-			trace(Tools.dumpTag(n,0));
+			print(Tools.dumpTag(n,0));
 		}
+	}
+
+	static function print(s:String)
+	{
+		neko.Lib.print(s+"\n");
 	}
 }

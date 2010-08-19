@@ -26,6 +26,16 @@ class Main
 	static function main()
 	{
 		var a = Sys.args();
+
+		if(a.length<1)
+		{
+			print("How To Use :");
+			print("Use like this : neko DumpTag.n swfFile.swf");
+			print("Where the swfFile is your swf that you want to see the information");
+			print("It doesn't produce anything, just a print");
+			return;
+		}
+		
 		swfPath = FileSystem.fullPath(a[0]);
 		
 		var i = File.read(swfPath, true);
@@ -42,5 +52,10 @@ class Main
 		{
 			trace(Tools.dumpTag(n,0));
 		}
+	}
+	
+	static function print(s:String)
+	{
+		neko.Lib.print(s+"\n");
 	}
 }

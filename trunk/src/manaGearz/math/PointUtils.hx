@@ -28,7 +28,7 @@ class PointUtils
 	
 	public static inline function length(p0:Point) : Float
 	{
-		return MathEx.sqrt(p0.lengthSqr());
+		return MathEx.sqrt(p0.x*p0.x + p0.y*p0.y);
 	}
 	
 	public static inline function angle(p0:Point) : Float
@@ -38,12 +38,21 @@ class PointUtils
 	
 	public static inline function angleBetween(p0:Point, p1:Point) : Float
 	{
-		return p0.angle() - p1.angle();
+		return MathEx.atan2(p0.y, p0.x) - MathEx.atan2(p1.y, p1.x);
+	}
+	
+	public static inline function distanceSqr(p0:Point, p1:Point) : Float
+	{
+		var x = p0.x-p1.x;
+		var y = p0.y-p1.y;
+		return x*x + y*y;
 	}
 	
 	public static inline function distance(p0:Point, p1:Point) : Float
 	{
-		return p1.sub(p0).length();
+		var x = p0.x-p1.x;
+		var y = p0.y-p1.y;
+		return MathEx.sqrt(x*x + y*y);
 	}
 	
 	public static inline function dot(p0:Point, p1:Point) : Float
@@ -63,8 +72,9 @@ class PointUtils
 	
 	public static inline function nearEquals(p0:Point, p1:Point, ?t:Float=0.0) : Bool
 	{
-		var p = p1.sub(p0).abs();
-		return (p.x <= t) && (p.y <= t);
+		var x = MathEx.abs(p0.x-p1.x);
+		var y = MathEx.abs(p0.y-p1.y);
+		return (x <= t) && (y <= t);
 	}
 	
 	public static inline function gt(p0:Point, p1:Point) : Bool
@@ -129,23 +139,29 @@ class PointUtils
 	
 	public static inline function normalize(p0:Point, ?t:Float=1.0) : Point
 	{
-		return p0.mul(t/p0.length());
+		var m = t/MathEx.sqrt(p0.x*p0.x + p0.y*p0.y);
+		return { x:p0.x*m, y:p0.y*m};
 	}
 	
 	public static inline function interpolate(p0:Point, p1:Point, f:Float) : Point
 	{
-		return p1.add(p1.sub(p0).mul(f));
+		return { x:(p1.x-p0.x)*f+p0.x, y:(p1.y-p0.y)*f+p0.y};
 	}
 	
 	public static inline function pivot(p0:Point, p1:Point, a:Float) : Point
 	{
-		var p = p0.sub(p1);
-		return p1.add(polar(p.length(), p.angle()+a));
+		var x = p0.x - p1.y;
+		var y = p0.y - p1.y;
+		var l = MathEx.sqrt(x*x + y*y);
+		var an = MathEx.atan2(y, x)+a;
+		return { x:p1.x+l*MathEx.cos(a), y:p1.y+l*MathEx.sin(a) };
 	}
 	
 	public static inline function project(p0:Point, p1:Point) : Point
 	{
-		return p1.mul(p0.normalize().dot(p1.normalize()));
+		var il = 1/(MathEx.sqrt(p0.x*p0.x + p0.y*p0.y) * MathEx.sqrt(p1.x*p1.x + p1.y*p1.y));
+		var m = (p0.x*p1.x + p0.y*p1.y) * il;
+		return { x:p1.x*m, y:p1.y*m };
 	}
 	
 	#if flash
