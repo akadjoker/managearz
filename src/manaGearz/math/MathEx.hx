@@ -260,7 +260,7 @@ class MathEx
 		x = x * (1.5 - half*x*x);
 		return x;
 		#else
-		return 1/sqrt(x);
+		return 1/Math.sqrt(x);
 		#end
 	}
 	

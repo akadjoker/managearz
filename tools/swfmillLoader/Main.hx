@@ -39,6 +39,16 @@ class Main
 	static function main()
 	{
 		var a = Sys.args();
+		
+		if(a.length<1)
+		{
+			print("How To Use :");
+			print("Use like this : neko SwfmillLoader.n assetsFolder");
+			print("Where the assetsFolder is your folder that contains the assets that want to be embeded");
+			print("It will produce a swf with this name : assetsFolder.swf");
+			return;
+		}
+		
 		basePath = FileSystem.fullPath(a[0]);
 		ids = [];
 		scs = [];
@@ -153,5 +163,10 @@ class Main
 				names.push(p2.substr(1, p2.lastIndexOf(".")-1).split("/").join("."));
 			}
 		}
+	}
+
+	static function print(s:String)
+	{
+		neko.Lib.print(s+"\n");
 	}
 }
